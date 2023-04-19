@@ -1,0 +1,44 @@
+flutter doctor -> verificar instalação do flutter no computador
+
+flutter upgrade -> se precisar atualizar
+
+flutter create nome_projeto -> cria projeto
+
+cd nome_projeto
+flutter run -> inicia projeto
+
+nas pastas android/ios do projeto geralmente não trabalhamos
+apenas configurações que precisam ser feitas no nativo
+
+pubspec.yaml é onde configuramos libs e outras coisas
+	publish_to -> configuração feita ao lançar app
+	versions: 1.0.0+1 -> versão
+	environment:
+		sdk: -> forma de fixar versão do flutter e conseguir trabalhar em outros lugares
+	dependencies: -> onde temos as libs configuradas
+	dev_dependencies: -> libs usadas apenas em desenv, não precisa gerar no build, ex: libs de teste
+	assets:
+		- assets/ -> configurar de onde vai acessar os assets
+	fonts: -> configuramos fontes
+
+pub.dev -> site em que buscamos bibliotecas
+
+flutter clean -> limpa lixo que pode acabar vindo junto do projeto
+
+flutter pub get -> baixa as dependências de novo
+
+após baixas plugin do flutter no vs code
+	ctrl shift p
+	comando Dart: Add Dependency - adiciona dependências
+
+extensões:
+	bloc -> lib mais usada no mercado
+	coverage gutters -> gerar relatório de testes, forma de mostrar que o app não está errado
+	dart data class generator
+
+Selecionar texto e Ctrl d -> seleciona tudo igual ao texto selecionado, ajuda para apagar comentários
+
+Componentes:
+	Stateful -> componente com estado, ação, muda algo na tela
+	Stateless -> algo estático, que não muda, não faz sentido usar memória para alterações e salvar coisa
+	
