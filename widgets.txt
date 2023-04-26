@@ -1,0 +1,28 @@
+Aula de Widgets
+	Widgets são o bloco de construção fundamental
+	É tudo que tem na tela
+	Desde aplicativos de texto, botões, imagens, textfield, tudo isso estão pré programados no flutter, precisamos só personalizar e entregar
+	
+	Dois tipos principais:
+		StatelessWidget
+			Não tem estado para mudar
+			Texto, imagem
+			Aparece no começo do projeto e não é alterado por nenhum motivo
+		StatefulWidget
+			Contém estado interno, armazenam dados
+			Ao apertar ou digitar muda, salva, faz algo
+			Quando tem ação é Stateful
+	
+	Exemplos que usam: Nubank, BMW (trabalha tudo com Flutter), Google (ferramentas novas) -> uso do multiplataforma
+	
+	O mundo inteiro já está aderindo a flutter, é a ferramenta mais usada
+	
+	Scaffold -> principal widget para montar tela
+		Tem componentes para AppBar
+		Corpo da tela - Body
+		BottomNavigationBar
+		Drawer
+		Float
+		
+SOLID -> vamos seguir
+não criamos mais a tela no main, criamos arquivo
