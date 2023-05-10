@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:githubrepo/constants/theme.dart';
 import 'package:githubrepo/screens/repo_detail_screen.dart';
-import 'package:githubrepo/screens/search_screen.dart';
 
 void main() {
   runApp(const GitHubRepoApp());

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:githubrepo/components/all.dart';
+import 'package:githubrepo/mocks/repositories_mock.dart';
+
+import '../models/repository.dart';
 
 class RepoDetailScreen extends StatefulWidget {
   const RepoDetailScreen({super.key});
@@ -10,6 +14,13 @@ class RepoDetailScreen extends StatefulWidget {
 class _RepoDetailScreenState extends State<RepoDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    Repository repository = kRepositoriesMock.first;
+
+    return Scaffold(
+      appBar: CustomAppBar(
+        text: "Detalhes",
+        hasBackButton: true,
+      ),
+    );
   }
 }
