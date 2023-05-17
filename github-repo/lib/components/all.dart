@@ -9,3 +9,4 @@ export 'logo.dart';
 export 'search_bar.dart';
 export 'search_input.dart';
 export 'text.dart';
+export 'dev/text.dart';

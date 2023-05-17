@@ -21,45 +21,54 @@ class RepoDetailScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.all(Spacings.l),
-            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.all(Spacings
+                .l), //EdgeInsets especifica a "margem" em que será aplicado, ex: horizontal, vertical
+            /*
+              EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10)
+              EdgeInsets.symmetric(vertical: 10, horizontal: 10)
+            */
+            width: MediaQuery.of(context)
+                .size
+                .width, //melhor do que double.infinity, ele se entende muito melhor entre os dispositivos
             child: Column(
+              //geralmente não faz sentido column dentro de column, existem outras maneiras de fazer
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CustomAvatar(
                   avatarUrl: item.owner?.avatar,
                   radius: Spacings.xxl * 2,
+                  // radius: MediaQuery.of(context).size.width / 6, assim fica dinâmico com o tamanho da tela
                 ),
                 const SizedBox(height: Spacings.xl),
-                CustomText(
+                CustomDevText(
                   text: 'Repositório:',
                   color: context.colors.kTextSecondaryColor,
-                  style: TypographyType.label,
+                  typographyType: TypographyType.label,
                 ),
-                CustomText(
-                  text: item.name ?? '-',
-                  style: TypographyType.header,
+                CustomDevText(
+                  text: item.name,
+                  typographyType: TypographyType.header,
                 ),
                 const SizedBox(height: Spacings.l),
-                CustomText(
+                CustomDevText(
                   text: 'Usuário:',
                   color: context.colors.kTextSecondaryColor,
-                  style: TypographyType.label,
+                  typographyType: TypographyType.label,
                 ),
-                CustomText(
-                  text: item.owner?.login ?? '-',
-                  style: TypographyType.title,
+                CustomDevText(
+                  text: item.owner?.login,
+                  typographyType: TypographyType.title,
                 ),
                 const SizedBox(height: Spacings.l),
-                CustomText(
+                CustomDevText(
                   text: 'Descrição:',
                   color: context.colors.kTextSecondaryColor,
-                  style: TypographyType.label,
+                  typographyType: TypographyType.label,
                 ),
-                CustomText(
-                  text: item.description ?? '-',
+                CustomDevText(
+                  text: item.description,
                   textAlign: TextAlign.center,
-                  style: TypographyType.body,
+                  typographyType: TypographyType.body,
                 ),
               ],
             ),

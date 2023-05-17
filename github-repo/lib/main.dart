@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:githubrepo/constants/theme.dart';
+import 'package:githubrepo/screens/owner_detail_screen.dart';
 import 'package:githubrepo/screens/repo_detail_screen.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class GitHubRepoApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: themeLight,
       darkTheme: themeDark,
-      home: const RepoDetailScreen(),
+      home: const OwnerDetailScreen(),
     );
   }
 }
