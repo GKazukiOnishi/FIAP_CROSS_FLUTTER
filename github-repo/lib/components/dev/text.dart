@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../constants/typography.dart';
-import '../text.dart';
+import 'package:githubrepo/constants/typography.dart';
+import 'package:githubrepo/components/text.dart';
 
 class CustomDevText extends StatelessWidget {
   const CustomDevText({

@@ -3,10 +3,9 @@ import 'package:githubrepo/components/all.dart';
 import 'package:githubrepo/models/owner.dart';
 import 'package:githubrepo/models/repository.dart';
 import 'package:githubrepo/utils/extensions/theme_data_extensions.dart';
-
-import '../constants/spacings.dart';
-import '../constants/typography.dart';
-import '../mocks/repositories_mock.dart';
+import 'package:githubrepo/constants/spacings.dart';
+import 'package:githubrepo/constants/typography.dart';
+import 'package:githubrepo/mocks/repositories_mock.dart';
 
 class OwnerDetailScreen extends StatefulWidget {
   const OwnerDetailScreen({super.key});
