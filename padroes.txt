@@ -1,0 +1,8 @@
+Imports absolutos
+Código em inglês
+Relatórios de testes
+Comentários
+Códigos gerados automaticamente
+Const para ajudar performance
+
+Link profile vs code https://vscode.dev/profile/github/d7e62469eaea57daee1eb5f07ab188cf

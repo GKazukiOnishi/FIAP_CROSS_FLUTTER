@@ -1,0 +1,25 @@
+Navegação - Flutter
+	Funções
+		pushNamed
+			Usada para fazer sequências
+			Vai colocando a próxima tela em cima da, adiciona na pilha
+		pushReplacementNamed
+			Tira a tela atual e coloca a tela de destino no lugar
+		pushNamedAndRemoveUntil
+			Abre uma tela e tudo antes dela some, fica só ela
+			Exemplo: tela home
+		pop
+			Volta para a tela anterior na pilha
+		popUntil
+			Volta até a tela indicada
+
+GoRoute - Lib do Google que facilita
+	Configuramos as rotas de forma bem mais fácil
+	Colocamos os caminhos e componentes
+	Se dentro do componente existe acesso a outros, colocamos dentro
+	e vai indo
+	
+	Com ele configurado
+	a partir do context podemos chamar quaisquer funções de navegação direto, sem toda a configuração manual
+	e simplesmente indicamos o valor de enum para onde queremos ir
+	
