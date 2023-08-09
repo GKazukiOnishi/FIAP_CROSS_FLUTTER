@@ -1,0 +1,49 @@
+State
+	Quando você precisa armazenar dados da tela, ter um controle das informações, adicionar ações na tela
+	
+	StatefulWidget
+		setState -> altera um estado do Widget
+	InheritedWidget -> permite passar seu estado para outros
+		Cria um provider
+		E os widgets filhos conseguem acessar o dado pelo NomeProvider.of(context)
+		Diferença do Stateful com ele é essa, se fosse Stateful ou outro teria que repassar a informação pelos construtores
+	
+	Hoje em dia tem várias libs gerenciadores de estado
+		Bloc -> mais usado
+			Arquitetura é um pouco mais complicado mas entrega tudo
+		Provider
+		Riverpod
+		GetX
+		MobX
+	
+	O uso depende das necessidades específicas do aplicativo
+	
+	BLoC (Business Logic Component)
+		Gerenciador orientado a eventos, trabalha com o negócio
+		mantida pelo Google
+	
+	Provider
+		Não orientado a eventos
+	
+	Riverpod
+		Tem injeção de dependências
+		Baseado em providers que são objetos que podem ser injetados em outros
+	
+	GetX
+		Abrange tudo mas é difícil de aplicar
+	
+	MobX
+		Observa o que o usuário faz e traz informações
+	
+	Gerenciamento de Estado é essencial, porque caso contrário é uma tela estática
+	Para cada projeto é bom buscar o framework que traz mais vantagens e menos desvantagens
+	
+Vamos usar o Bloc
+	Trabalha com regra de negócio
+	Então ajuda porque se baseia no negócio, separa a tela da lógica
+	
+	Divide o estado do app em diferentes blocos. Com cada bloco gerenciando uma parte específica do app
+	
+	
+	
+	
