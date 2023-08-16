@@ -1,0 +1,25 @@
+Bloc - Framework
+	Gerenciador de estado complexo
+	Se não tomar cuidado com a árvore fica bem pesado em projetos grandes
+	Precisa limpar etc.
+	
+	Os outros frameworks são a mesma ideia, mas o bloc é um pouco mais complicado para iniciantes
+	
+	Events - Clique, alguma ação - Fazer algo a partir disso
+	Blocs - O que serão alterados com a ação do evento, o que vai fazer
+	States - Representam o estado, ao serem alterados indica que deve ser renderizado novamente
+	
+	BlocProvider - Garante que os widgets abaixo vão enxergar ele
+	BlocBuilder - Vai construir a tela conforme o estado é atualizado
+	BlocListener - vai ouvir as alterações de estado e vai passar pro usuário
+	BlocConsumer - BlocBuilder e BlocListener combinados, ouve e renderiza, é o mais usado no Bloc
+	
+	Libs
+		flutter_bloc, biblioteca oficial do Flutter para usar o Bloc
+		equatable, ajuda a comparar estados e eventos automaticamente
+		
+		bloc_test, principal biblioteca para testar o bloc, criado pela própria comunidade -> dev só
+		
+Com as extensões configuradas, podemos criar Bloc new Bloc
+Lembrar de apagar a lib antiga do bloc e importar de novo
+Colocar atributos antes dos construtores
