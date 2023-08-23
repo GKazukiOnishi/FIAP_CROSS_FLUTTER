@@ -31,3 +31,4 @@ Colocar atributos antes dos construtores
 		UI -> events -> bloc -> request -> data
 		data -> response -> bloc -> states -> UI
 	
+comando "flutter test --coverage"

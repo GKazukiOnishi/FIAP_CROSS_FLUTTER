@@ -23,7 +23,7 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   }
 
   void _onRandomEvent(RandomEvent event, Emitter emit) {
-    emit(RandomState(counter: Random().nextInt(100)));
+    emit(RandomState(counter: Random().nextInt(100) + 1));
   }
 
   void _onClearEvent(ClearEvent event, Emitter emit) {
