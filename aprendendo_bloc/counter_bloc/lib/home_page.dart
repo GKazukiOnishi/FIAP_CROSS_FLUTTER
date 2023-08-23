@@ -6,6 +6,8 @@ class MyHomePage extends StatefulWidget {
   //final void Function() onIncrementPressed;
   final VoidCallback onIncrementPressed;
   final VoidCallback onDecrementPressed;
+  final VoidCallback onRandomPressed;
+  final VoidCallback onClearPressed;
 
   const MyHomePage({
     super.key,
@@ -13,6 +15,8 @@ class MyHomePage extends StatefulWidget {
     required this.counter,
     required this.onIncrementPressed,
     required this.onDecrementPressed,
+    required this.onRandomPressed,
+    required this.onClearPressed,
   });
 
   @override
@@ -45,10 +49,39 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: widget.onIncrementPressed,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: widget.onIncrementPressed,
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            onPressed: widget.onDecrementPressed,
+            tooltip: 'Decrement',
+            child: const Icon(Icons.remove),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            onPressed: widget.onRandomPressed,
+            tooltip: 'Random',
+            child: const Icon(Icons.ads_click),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            onPressed: widget.onClearPressed,
+            tooltip: 'Clear',
+            child: const Icon(Icons.clear),
+          ),
+        ],
       ),
     );
   }

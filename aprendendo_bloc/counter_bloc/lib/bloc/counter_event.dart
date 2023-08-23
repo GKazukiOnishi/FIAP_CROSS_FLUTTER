@@ -14,3 +14,11 @@ class IncrementEvent extends CounterEvent {
 class DecrementEvent extends CounterEvent {
   const DecrementEvent(); //Construtor do evento, usado para passar informações, mas aqui trabalharemos com o dado global
 }
+
+class RandomEvent extends CounterEvent {
+  const RandomEvent();
+}
+
+class ClearEvent extends CounterEvent {
+  const ClearEvent();
+}

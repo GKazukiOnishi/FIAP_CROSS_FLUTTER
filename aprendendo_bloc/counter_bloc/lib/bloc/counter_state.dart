@@ -21,3 +21,11 @@ class IncrementState extends CounterState {
 class DecrementState extends CounterState {
   const DecrementState({required super.counter});
 }
+
+class RandomState extends CounterState {
+  const RandomState({required super.counter});
+}
+
+class ClearState extends CounterState {
+  const ClearState({required super.counter});
+}

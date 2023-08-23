@@ -23,3 +23,11 @@ Bloc - Framework
 Com as extensões configuradas, podemos criar Bloc new Bloc
 Lembrar de apagar a lib antiga do bloc e importar de novo
 Colocar atributos antes dos construtores
+
+	No bloc tratamentos a regra de negócio nele, aí temos outro componente para a tela
+	
+	Fluxo:
+	
+		UI -> events -> bloc -> request -> data
+		data -> response -> bloc -> states -> UI
+	

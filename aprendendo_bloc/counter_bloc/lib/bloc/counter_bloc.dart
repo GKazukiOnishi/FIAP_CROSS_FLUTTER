@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +10,8 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   CounterBloc() : super(const CounterInitial()) {
     on<IncrementEvent>(_onIncrementEvent);
     on<DecrementEvent>(_onDecrementEvent);
+    on<RandomEvent>(_onRandomEvent);
+    on<ClearEvent>(_onClearEvent);
   }
 
   void _onIncrementEvent(IncrementEvent event, Emitter emit) {
@@ -16,5 +20,13 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
 
   void _onDecrementEvent(DecrementEvent event, Emitter emit) {
     emit(DecrementState(counter: state.counter - 1));
+  }
+
+  void _onRandomEvent(RandomEvent event, Emitter emit) {
+    emit(RandomState(counter: Random().nextInt(100)));
+  }
+
+  void _onClearEvent(ClearEvent event, Emitter emit) {
+    emit(const ClearState(counter: 0));
   }
 }
