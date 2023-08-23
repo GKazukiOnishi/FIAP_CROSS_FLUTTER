@@ -13,9 +13,7 @@ void main() {
   });
 
   void mockRandomFunction(int mock) {
-    when(() => Random().nextInt(any())).thenAnswer(
-      (_) => mock,
-    );
+    when(() => Random().nextInt(any())).thenReturn(mock);
   }
 
   group(
