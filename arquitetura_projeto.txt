@@ -1,0 +1,83 @@
+Arquitetura Limpa
+	Clean Architecture
+	
+	Cada classe/componente/módulo com a sua responsabilidade
+	Cada um faz o que deve fazer
+	
+	Data, Domain, Presentation
+	
+		Presentation -> Tela
+		Domain -> Regra de negócio
+		Data -> Banco de dados ou API
+		
+		Repositories
+			Conecta Domain com a Data
+		
+		Domain com as entidades
+			Use Cases para cada negócio
+		
+		Presentation exibindo a informação
+	
+	Dependency Injection
+		Forma de obter a dependência de um componente sem precisar instanciar ou criar as coisas em cada uso
+		Só pedimos a instância e funciona
+		
+	Data Layer
+		Camada de Dados, camada mais interna
+		Sem negócio nenhum
+		Só leitura/gravação de dados
+	
+		Local Data Source
+			Cache,
+			Banco de dados local
+			Arquivo
+			
+			Usados para implementar GET, POST, PUT, DELETE, lida com erros e exceções
+		
+		Remote Data Source
+			Mesmas coisas, mesmas operações
+			Mas pucham de fontes remotas como APIs, bancos de dados ou serviços de nuvem
+		
+		Models
+			Representam os dados do aplicativo
+			Armazenam e manipulam os dados do aplicativo
+			Não tem regra de negócio
+		
+		Repositories
+			Conectam as regram de negócios e os dados
+			
+			Associa com o Local/Remote Data Source
+			Trata eles
+		
+	Domain Layer
+		Entre Data e Presentation
+		
+		Lógica de negócio do aplicativo
+		Informações trabalhadas dentro do aplicativo é nessa camada
+		
+		Tem as Use Cases, transforma Model em uma Entidade
+		
+		Entities
+			Representam objetos de negócio do aplicativo
+			Podem conter regras de negócio, que não teriam na Model
+			É parecida com a Model, mas trata negócio
+		
+		Model
+			Sem lógica de negócio
+			Sem acesso a dados
+			Representa dados do aplicativo, estado, entrada e saída do usuário
+		Entities
+			Objetos de negócios
+			Pode conter lógica
+			Sem acesso a dados
+			Representam objetos de negócio do app
+	
+	Presentation Layer
+		Trata os widgets, componentes
+		Rotas em pasta de config
+		Deve ser o mais simples possível
+	
+	Bloc
+		Dentro da arquitetura limpa é usado para trabalhar com o estado do aplicativo
+		Conecta Domain com a Presentation
+		
