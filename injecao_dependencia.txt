@@ -1,0 +1,83 @@
+Vamos usar a dependência get_it
+	A ideia é configurar uma forma de inicializar e tornar algo disponível
+	E utilizar esse objeto em diversos pontos do aplicativo sem precisar recriar ou pegar por parâmetro
+	
+	Pode se configurar as instâncias como factory ou singleton
+	A factory abre mais portas para configurações e tratamentos
+	A singleton é uma instância que será iniciada e será reutilizada em vários pontos
+	
+import 'package:get_it/get_it.dart';
+import 'package:github_discover/src/presentation/blocs/profile/profile_bloc.dart';
+
+final di = GetIt.instance;
+
+Future<void> init() async {
+  di.registerLazySingleton<ProfileBloc>(() => ProfileBloc());
+}
+
+	Na main então chamamos esse init
+	
+import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:github_discover/src/app.dart';
+import 'package:github_discover/src/config/injection.dart' as di;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  usePathUrlStrategy();
+
+  await di.init();
+
+  runApp(const GitHubDiscoverApp());
+}
+
+	Com isso podemos usar o bloc da seguinte forma sem usar o BlocProvider
+	
+class _ProfileScreenState extends State<ProfileScreen> {
+  final ProfileBloc _bloc = di.get<ProfileBloc>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _bloc.add(ProfileInitalEvent());
+  }
+ 
+	Data layer
+		Vamos começar por aqui no projeto
+		Onde tratamentos as bases de dados
+			Remote Data Sources
+			Local Data Sources
+		
+	Classes Models
+		Representam classes do aplicativo, sem regra de negócio
+	
+Adicionar dependências de
+	json_annotation
+	json_serializable -> dev
+	
+Executer GET em https://api.github.com/users/GKazukiOnishi
+Copiar JSON de retorno
+Ir no site quicktype.io e colocar o JSON de retorno para gerar a classe de modelo automaticamente
+Criar o arquivo e colar a classe
+Extender Equatable e copiar o get props da entidade
+Colocar em cima da classe part 'skill_model.g.dart'; para cada modelo, tornando ela configurável e para enxergar a classe que seria gerada
+Anotar com @JsonSerializable() a classe para configurar ela
+Anotar os atributos com @JsonKey(name: "") para configurar o nome do atributo JSON para cada atributo da Model
+
+
+Rodar comando para gerar classes de contrução de JSON e para JSON etc.
+dart run build_runner build --delete-conflicting-outputs -> tirado lá do makefile
+
+Enviroment
+	Variáveis de ambientes para configurar informações úteis ao aplicativo
+	Podemos colocar API Keys, URLs base, configurações do ambiente etc.
+	
+	Adicionar dependência de envied e envied_generator (dev)
+	
+	Configurar esses arquivos no gitignore para não serem enviados no commit
+	Só deixar o .evn.example ser enviado, os demais .env e .env.debug no ignore
+	
+	Podemos tirar o *.g.dart para tirar arquivos gerados automaticamente
+	
+	Olhar no repo github-discover para ver os arquivos de config criados
