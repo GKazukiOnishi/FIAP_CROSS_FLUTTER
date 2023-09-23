@@ -10,7 +10,7 @@ final kRepositoriesMock = [
       avatar: "https://avatars.githubusercontent.com/u/55497290?v=4",
     ),
     htmlUrl: "https://github.com/GKazukiOnishi/FIAP_CROSS_FLUTTER",
-    description: null,
+    description: "AWdawdawd",
     url: "https://api.github.com/search/repositories?q=FIAP_CROSS_FLUTTER",
   ),
   Repository(

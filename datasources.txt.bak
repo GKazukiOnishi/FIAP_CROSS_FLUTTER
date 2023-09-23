@@ -1,0 +1,126 @@
+LocalDataSource -> banco local do app rodando no usuário
+
+	Vamos usar Hive
+	Configurar HiveInterface, criar adapters para configurar cada entidade
+	Cada uma com seu typeId
+	Rodar comandos de geração de arquivos automáticos
+	
+	Registrar cada adapter a ser usado
+	
+	HiveInterface hive = Hive..registerAdapter(SkillHiveAdapter());
+
+	Vamos então criar o ProfileLocalDataSource
+	Usando clean arquitecture uma das ideias é criar interfaces para tudo
+	Porque vamos implementar com o hive, mas poderia ser outro
+	Tendo a interface podemos alterar a implementação depois
+	
+	Hive
+		Trabalha com Box -> caixinhas com as informações
+		Podemos colocar tudo no mesmo, ou separar por módulo etc.
+		
+		Vamos separar as boxes
+		
+		late Box _skillBox; -> começando a Box mas sem iniciar ainda
+		
+		await _skillBox.clear();
+		await _skillBox.delete(id);
+		return _skillBox.values
+			.map((skill) => SkillModel(
+				  id: skill.id,
+				  title: skill.title,
+				  description: skill.description,
+				  isCompleted: skill.isCompleted,
+				))
+			.toList();
+		 await _skillBox.put(
+			skill.id,
+			SkillHive(
+			  id: skill.id,
+			  title: skill.title,
+			  description: skill.description,
+			  isCompleted: skill.isCompleted,
+			),
+		);
+		await _skillBox.put(
+			id,
+			SkillHive(
+			  id: skill.id,
+			  title: skill.title,
+			  description: skill.description,
+			  isCompleted: skill.isCompleted,
+			),
+		);
+		
+		E tratar as exceções com try catch (error) throw DatabaseException();
+	
+	Configurar instanciação no arquivo injection.dart
+	
+	  // LocalDataSource
+	  getIt.registerSingleton<ProfileLocalDataSource>(
+		ProfileLocalDataSourceImpl(hive),
+	  ); //registerSingleton vai criar a instância quando for usado pela primeira vez e vai manter só ela
+	  
+	  // Bloc
+	  // foram alterados para registerFactory porque aí ele seria instanciado na inicialização do app
+	
+RemoteDataSource
+	Alterar em endpoints.dart a URL com o nosso user do github
+	
+	Lembrando que o prof já configurou as exceptions em exception.dart, por isso o tratamento anterior funcionou
+	Posteriormente podemos tratar isso melhor
+
+	Criamos então o profile_remote_data_source.dart
+	Vamos usar a lib DIO para isso, na comunicação remota
+	
+	Em async temos:
+		Future -> requisição direta, vai ter uma resposta
+		Stream -> vai abrir um canal de comunicação e sempre vai ter entrada e resposta
+	
+	Dio
+		final response = await dio.get(
+		  '${Env.baseUrl}${Endpoint.profile}',
+		);
+		dio.post
+		dio.put
+		dio.delete
+		
+		podemos passar queriesParams etc. para ele também (refresh token etc.)
+		
+		Com a resposta podemos usar ProfileModel.fromJson(response.data); -> da classe que foi autogerada para conseguir converter
+		
+		Podemos configurar interceptors para o Dio também, para tratar requisições e responses
+		
+		Configuramos na injetions.dart
+		O Dio (como era simples foi instanciado lá, mas poderia ser em outro arquivo incluindo interceptors etc.)
+		
+		Configuramos lá também a instanciação dos RemoteDataSource com registerSingleton também
+		
+		  // RemoteDataSource
+		  getIt.registerSingleton<ProfileRemoteDataSource>(
+			ProfileRemoteDataSourceImpl(getIt<Dio>()), --> reutilizando instanciado do Dio já configurada no injections
+		  );
+		
+Repositories
+	Ponte entre data e domain
+	Como vai ser uma ponte, a domain vai conter a interface, a data vai conter a implementação
+	É a ideia do Clean Archi, de que a implementação poderia ser mockada por exemplo, e a domain continuaria funcionando
+	
+	Criamos um Repository que irá receber os dataSources disponíveis
+	Então configuramos no injection.dart a instanciação desse repository dados os dataSources já configurados no getIt
+	
+	class ProfileRepositoryImpl implements ProfileRepository {
+	  final ProfileLocalDataSource localDataSource;
+	  final ProfileRemoteDataSource remoteDataSource;
+
+	  ProfileRepositoryImpl({
+		required this.localDataSource,
+		required this.remoteDataSource,
+	  });
+	}
+
+	// Repositories
+	getIt.registerSingleton<ProfileRepository>(ProfileRepositoryImpl(
+		localDataSource: getIt<ProfileLocalDataSource>(),
+		remoteDataSource: getIt<ProfileRemoteDataSource>(),
+	));
+	  

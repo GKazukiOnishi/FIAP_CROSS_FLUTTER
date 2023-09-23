@@ -79,6 +79,7 @@ Enviroment
 	Só deixar o .evn.example ser enviado, os demais .env e .env.debug no ignore
 	
 	BASE_URL="https://api.github.com/"
+
 	
 	Podemos tirar o *.g.dart para tirar arquivos gerados automaticamente
 	
