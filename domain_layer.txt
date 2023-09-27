@@ -1,0 +1,128 @@
+Domain - Camada de negócio
+
+	Entities
+		Contém o dado, mas também pode ter regra de negócio, mais perto das lógicas
+		
+	Repositories
+		Usa os dataSources e faz as chamadas para eles
+
+	Use Cases
+		Contém as regras de negócios e suas implementações
+
+	Either
+		Tipo que pode representar um dos dois valores, sucesso ou erro
+		Ferramenta útil para tratar erro
+		
+		Facilita por possibilitar retornar do serviço um erro ou a entidade de sucesso, ao invés de sla, retornar um null e precisar
+		bolar uma outra forma de tratar erros
+
+
+Prática
+	Add lib dartz
+	
+	Lembrar de colocar .env, .env.debug dnv
+	BASE_URL="https://api.github.com/"
+	
+	Lembrar de rodar comando para gerar arquivos automáticos
+	
+
+	import 'package:dartz/dartz.dart';
+	import 'package:github_discover/src/data/utils/failure.dart';
+	import 'package:github_discover/src/domain/entities/profile.dart';
+
+	abstract class ProfileRepository {
+	  Future<Either<Failure, Profile>> getProfile(); -> geralmente na esquerda fica a falha, na direita o sucesso
+	}
+
+
+	// ignore_for_file: public_member_api_docs, sort_constructors_first
+	import 'dart:io';
+
+	import 'package:dartz/dartz.dart';
+	import 'package:github_discover/src/data/datasources/local/profile_local_data_source.dart';
+	import 'package:github_discover/src/data/datasources/remote/profile_remote_data_source.dart';
+	import 'package:github_discover/src/data/utils/exception.dart';
+	import 'package:github_discover/src/data/utils/failure.dart';
+	import 'package:github_discover/src/domain/entities/profile.dart';
+	import 'package:github_discover/src/domain/repositories/profile_repository.dart';
+
+	class ProfileRepositoryImpl implements ProfileRepository {
+	  final ProfileLocalDataSource localDataSource;
+	  final ProfileRemoteDataSource remoteDataSource;
+
+	  ProfileRepositoryImpl({
+		required this.localDataSource,
+		required this.remoteDataSource,
+	  });
+
+	  @override
+	  Future<Either<Failure, Profile>> getProfile() async {
+		try {
+		  final result = await remoteDataSource.getProfile();
+		  return Right(result.toEntity());
+		} on ServerException {
+		  return const Left(ServerFailure('Server Exception'));
+		} on SocketException {
+		  return const Left(ConnectionFailure('Falha na conexão com a rede')); -> aqui conseguimos especificar o erro
+		}
+	  }
+	}
+
+	
+	import 'package:dartz/dartz.dart';
+	import 'package:github_discover/src/data/utils/failure.dart';
+	import 'package:github_discover/src/domain/entities/profile.dart';
+	import 'package:github_discover/src/domain/repositories/profile_repository.dart';
+
+	class GetProfileUseCase {
+	  final ProfileRepository repository;
+
+	  GetProfileUseCase(this.repository);
+
+	  Future<Either<Failure, Profile>> execute() async {
+		return await repository.getProfile(); -> aqui no UseCase podemos tratar regras de negócio, permitindo tratar antes de chegar na API
+			-> ou logo depois de vier o dado, para centralizar a lógica
+	  }
+	}
+
+
+  // UseCases
+  getIt.registerLazySingleton(() => GetProfileUseCase(getIt())); -> passando getIt() por tipo de dado ele já sabe que é um ProfileRepository
+  // Bloc
+  getIt.registerFactory<ProfileBloc>(() => ProfileBloc(
+        getProfileUseCase: getIt<GetProfileUseCase>(),
+      ));
+  
+	class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+	  final GetProfileUseCase _getProfileUseCase;
+
+	  ProfileBloc({
+		required GetProfileUseCase getProfileUseCase,
+	  })  : _getProfileUseCase = getProfileUseCase,
+			super(ProfileInitial()) {
+		on<ProfileInitalEvent>(_onProfileInitalEvent);
+		on<SkillAddedEvent>(_onSkillAddedEvent);
+		on<SkillCompletedEvent>(_onSkillCompletedEvent);
+		on<SkillDeletedEvent>(_onSkillDeletedEvent);
+		on<SkillReorderedEvent>(_onSkillReorderedEvent);
+	  }
+
+	  void _onProfileInitalEvent(
+		ProfileInitalEvent event,
+		Emitter emit,
+	  ) async {
+		emit(ProfileLoadingState());
+
+		final profileResult = await _getProfileUseCase.execute();
+
+		profileResult.fold((failure) { -> fold é usado com Either para tratar falha e sucesso, executando algo em cada caso
+		  emit(ProfileErrorState(
+			message: failure.message,
+		  ));
+		}, (data) {
+		  emit(ProfileSuccessState(
+			profile: data,
+			skills: kSkillsMock,
+		  ));
+		});
+	  }
